@@ -2,11 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {MovieCardComponent} from "./movie-card/movie-card.component";
 import {IFilm} from "./film/IFilm";
+import {PrettyTitlePipe} from   "./pretty-title.pipe";
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MovieCardComponent],
+  imports: [RouterOutlet, MovieCardComponent, PrettyTitlePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
