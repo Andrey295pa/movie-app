@@ -1,14 +1,76 @@
+<!--
+<mat-grid-list cols="4">
+  <mat-grid-tile colspan="3" style="background: aqua; height: 100%">
+    <div *ngFor="let film of movies; let i = index">
 
-<div class="splitter">
-  <div class="left" style="width: 70%">
-    @for (movie of movies; track movie.id) {
-      <app-movie-card [movie] = "movie"
-      (favoriteFilm)="saveFavorite($event)"
-      (likeFilm)="saveLikeFilm($event)">
+      <app-movie-card class="card"
+                      [movie] = "film"
+                      (favoriteFilm)="saveFavorite($event)"
+                      (likeFilm)="saveLikeFilm($event)">
       </app-movie-card>
-    }
+
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile style="background: moccasin; height: 100%">
+    <ng-container>
+      @if(favoriteFilms.length > 0) {
+      <p  class = "button-30" >Favorite film : {{lastFavoriteFilm}}</p>
+      }
+    </ng-container>
+
+    <ng-container>
+      @if(likeFilms.length > 0) {
+      <h3>Like film</h3>
+      <ul *ngFor="let film of likeFilms">
+    <li>{{film | prettyTitle}}</li>
+</ul>
+      }
+    </ng-container>
+  </mat-grid-tile>
+
+</mat-grid-list>-->
+
+
+
+<!--<div class="splitter">
+  <div class="left" style="width: 70%">
+
+    <div class="tab-navigation" >
+      <mat-tab-group >
+
+        <mat-tab>
+          <ng-template mat-tab-label>All films</ng-template>
+          SOME CONTENT
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>My favorites</ng-template>
+          SOME CONTENT 2
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>WatchList</ng-template>
+          SOME CONTENT 3
+        </mat-tab>
+
+
+      </mat-tab-group>
+    </div>
+
+    <div class="content">
+      <div *ngFor="let film of movies; let i = index">
+
+        <app-movie-card class="card"
+                        [movie] = "film"
+                        (favoriteFilm)="saveFavorite($event)"
+                        (likeFilm)="saveLikeFilm($event)">
+        </app-movie-card>
+
+      </div>
+    </div>
 
   </div>
+
   <div class="right" style="width: 30%">
     <ng-container>
       @if(favoriteFilms.length > 0) {
@@ -19,15 +81,71 @@
     <ng-container>
       @if(likeFilms.length > 0) {
       <h3>Like film</h3>
-      <ul >
-        @for(film of likeFilms; track film) {
-          <li>{{film | prettyTitle}}</li>
-        }
-      </ul>
+      <ul *ngFor="let film of likeFilms">
+    <li>{{film | prettyTitle}}</li>
+</ul>
       }
     </ng-container>
   </div>
-</div>
+</div>-->
+
+
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav opened>
+
+    <mat-nav-list >
+
+      <mat-list-item role="listitem"  (click)="sidenav.close()">All films</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/popular" (click)="sidenav.close()">Now palaing</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/popular" (click)="sidenav.close()"
+      >Popular films</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/popular" (click)="sidenav.close()">Top level</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/popular" (click)="sidenav.close()">Upcomming</mat-list-item>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content >
+   <!-- <button (click)="openened = !openened">open menu</button>-->
+ <button (click)="sidenav.toggle()" >Open Menu</button>
+
+<div class="tab-navigation" >
+      <mat-tab-group (selectedTabChange)="tabChange($event)">
+
+
+        <mat-tab>
+          <ng-template mat-tab-label>All films</ng-template>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>My favorites</ng-template>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>WatchList</ng-template>
+        </mat-tab>
+
+      </mat-tab-group>
+ </div>
+
+
+
+    <div style="height: 65%">
+      <router-outlet></router-outlet>
+    </div>
+
+    <div style="height: 35%">
+      <router-outlet name="detailRouters"></router-outlet>
+    </div>
+</mat-sidenav-content>
+
+
+</mat-sidenav-container>
+
+
+
+
 
 
 

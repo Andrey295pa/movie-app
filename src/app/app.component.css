@@ -3,3 +3,35 @@
   height: 100px;
   display: flex;
 }
+
+/*.card {
+  float: left;
+  margin: 5px;
+}*/
+
+.tab-navigation {
+  /*width: 75%;*/
+ background: darkblue;
+  height: 100px;
+  color: black;
+}
+
+.verticalMenu {
+  width: 100px;
+  background: blueviolet;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+
+mat-sidenav, mat-sidenav-container {
+  padding: 16px;
+}
+
+mat-sidenav {
+  background: blueviolet;
+  width: 200px;
+}
+
