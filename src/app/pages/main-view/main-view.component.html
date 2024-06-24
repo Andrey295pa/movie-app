@@ -1,0 +1,13 @@
+
+<div class="content">
+  <div *ngFor="let film of movies; let i = index">
+
+    <app-movie-card class="card"
+                    [movie] = "film"
+                    (favoriteFilm)="saveFavorite($event)"
+                    (likeFilm)="saveLikeFilm($event)"
+                    (detailFilmId)="showDetailFilm($event)">
+    </app-movie-card>
+
+  </div>
+</div>
