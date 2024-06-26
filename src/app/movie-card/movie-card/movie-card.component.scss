@@ -1,15 +1,13 @@
-
 .example-card {
   display: flex;
   width: 150px;
   height: 150px;
   align-items: center;
   margin-bottom: 8px;
-  background-image: url("../../assets/img/Film.jpg");
+  background: aqua;
+ /* background-image: url("../../assets/img/Film.jpg");*/
 }
 
 .btn {
   margin-right: 5px;
 }
-
-

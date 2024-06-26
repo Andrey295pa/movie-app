@@ -1,0 +1,18 @@
+
+<mat-card class = "example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title [matTooltipDisabled] = "movie.title.length < 12" matTooltip = "{{movie.title}}" matTooltipPosition="right">
+        {{movie.title | titleSize: 12}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        Movie rating: {{movie.rating}}
+      </mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
+
+  <mat-card-actions>
+    <button (click)="addLikeFilm(movie.id)" class="btn" >Like</button>
+    <button (click)="showDetail(movie.id)">Detail</button>
+  </mat-card-actions>
+</mat-card>

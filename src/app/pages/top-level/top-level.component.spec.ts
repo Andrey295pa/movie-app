@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TooltipTitleComponent } from './tooltip-title.component';
+import { TopLevelComponent } from './top-level.component';
 
-describe('TooltipTitleComponent', () => {
-  let component: TooltipTitleComponent;
-  let fixture: ComponentFixture<TooltipTitleComponent>;
+describe('TopLevelComponent', () => {
+  let component: TopLevelComponent;
+  let fixture: ComponentFixture<TopLevelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TooltipTitleComponent]
+      imports: [TopLevelComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TooltipTitleComponent);
+    fixture = TestBed.createComponent(TopLevelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

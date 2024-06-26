@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import {IFilm} from "./IFilm";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserFilmsService {
-watcheFilmId: number[] = [];
-likeFilmId: number[] = [];
+  watcheFilmId: number[] = [];
+  likeFilmId: number[] = [];
   constructor() { }
 
   public  setLikeFilm(id:number): void {
