@@ -1,12 +1,21 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav opened>
+    <mat-nav-list >
 
-  <app-movie-card [moviesCollection]= "movies"
-                  (favoriteFilm)="saveFavorite($event)"
-                  (likeFilm)="saveLikeFilm($event)"></app-movie-card>
+      <mat-list-item role="listitem" routerLink="/" (click)="sidenav.close()">All films</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/now-plaing" (click)="sidenav.close()">Now plaing</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/popular" (click)="sidenav.close()">Popular films</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/top-level" (click)="sidenav.close()">Top level</mat-list-item>
+      <mat-list-item role="listitem" routerLink="/upcomming" (click)="sidenav.close()">Upcomming</mat-list-item>
 
-    <p  class = "button-30" >Favorite film : {{lastFavoriteFilm}}</p>
-    <p  class = "button-30" >Like film : {{lastLikeFilm}}</p>
+    </mat-nav-list>
+  </mat-sidenav>
 
+  <mat-sidenav-content>
+    <button (click)="sidenav.toggle()">open menu</button>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 
-
+</mat-sidenav-container>
 
 
