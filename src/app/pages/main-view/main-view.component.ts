@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import {MovieCardComponent} from "../../movie-card/movie-card/movie-card.component";
 import {IFilm} from "../../film/IFilm";
 import {AllFilmsService} from "../../service/all-films.service";
@@ -6,7 +6,6 @@ import {UserFilmsService} from "../../service/user-films.service";
 import {Router} from "@angular/router";
 import {NgForOf} from "@angular/common";
 import {MatTab, MatTabChangeEvent, MatTabGroup, MatTabLabel} from "@angular/material/tabs";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-main-view',
@@ -21,39 +20,24 @@ import {Subscription} from "rxjs";
   templateUrl: './main-view.component.html',
   styleUrl: './main-view.component.scss'
 })
-export class MainViewComponent implements OnInit, OnDestroy {
-  public movies: Array<IFilm> = [];
-  public watchFilms: number[] = [];
-  public likeFilms: IFilm[] = [];
-  private _filmsSubscription!: Subscription;
+export class MainViewComponent {
+  movies: Array<IFilm> = [];
+  favoriteFilms: number[] = [];
+  likeFilms: string[] = [];
 
   constructor(private allFilmsService: AllFilmsService,
               private userFilmService: UserFilmsService,
               private router: Router) {
+    this.movies = allFilmsService.getMovies();
   }
 
-  ngOnInit(): void {
-    this.allFilmsService.getAllMoviesFromApi().subscribe(data => {
-      this.movies = data.results;
-      console.log(data.results);
-    });
-    this._filmsSubscription = this.userFilmService.likeFilms$.subscribe(value => this.likeFilms = value);
+  public saveFavorite( idFilm: number) {
+    this.favoriteFilms.unshift(idFilm);
   }
 
-  ngOnDestroy(): void {
-    this._filmsSubscription?.unsubscribe();
-  }
+  saveLikeFilm(idFilm: number) {
+    this.userFilmService.setLikeFilm(idFilm)
 
-  public saveWatcesFilm(idFilm: number) {
-    this.watchFilms.unshift(idFilm);
-  }
-
-  saveLikeFilm(film: IFilm) {
-    if(this.likeFilms.find(value => value.id === film.id) === undefined) {
-      const newArr: IFilm[] = this.likeFilms;
-      newArr.push(film);
-      this.userFilmService.likeFilms$.next(newArr)
-    }
   }
 
   showDetailFilm(id: number) {
@@ -67,5 +51,4 @@ export class MainViewComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/like');
     }
   }
-
 }

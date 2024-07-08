@@ -1,83 +1,53 @@
 import { Injectable } from '@angular/core';
-import {IFilm, IModelData} from "../film/IFilm";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, EMPTY, map, Observable, of, retry} from "rxjs";
+import {IFilm} from "../film/IFilm";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AllFilmsService {
   movies: Array<IFilm> = [];
-  apiKey  = '?api_key=df138d88ccd7b426a6eb912b3a478e16';
-  apiTocken  = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZjEzOGQ4OGNjZDdiNDI2YTZlYjkxMmIzYTQ3OGUxNiIsIm5iZiI6MTcyMDEwOTQyNi4yNDc4NzgsInN1YiI6IjY2ODZjNWZjZjA5NTMwOTBjOTFhNmUzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Bzi82zUSbZ6HVmFn_iOh_Wvx8Wdsj_QQGh3wJ2r279k';
-  baseApiUrl = 'https://api.themoviedb.org/3/movie';
-  constructor(private httpClient: HttpClient) {
+  constructor() {
+    this.movies = this.initFilmsCollection();
   }
 
-  public getMovieApiById(id: number): Observable<IFilm> {
-
-    return this.httpClient.get<IFilm>(`${this.baseApiUrl}/${id}${this.apiKey}`)
-    .pipe(
-      retry(3),
-      catchError((er: HttpErrorResponse) => {
-        console.log(`Error ${JSON.stringify(er)}`);
-        return EMPTY;
-      })
-    );
-
-  }
-  public getAllMoviesFromApi(): Observable<IModelData> {
-    return this.httpClient.get<IModelData>(`${this.baseApiUrl}/popular${this.apiKey}`)
-    .pipe(
-      retry(3),
-      catchError((er: HttpErrorResponse) => {
-        console.log(`Error ${JSON.stringify(er)}`);
-        return EMPTY;
-      })
-    );
+  public getMovies(): Array<IFilm> {
+    return this.movies;
   }
 
-  public getNowPlayingMoviesFromApi(): Observable<IModelData> {
-    return this.httpClient.get<IModelData>(`${this.baseApiUrl}/now_playing${this.apiKey}`)
-    .pipe(
-      retry(3),
-      catchError((er: HttpErrorResponse) => {
-        console.log(`Error ${JSON.stringify(er)}`);
-        return EMPTY;
-      })
-    );
+  public getMovie(id: number): IFilm {
+    let movie = this.movies.find(m => m.id === id);
+    return  <IFilm>movie
   }
-
-  public getPopulargMoviesFromApi(): Observable<IModelData> {
-    return this.httpClient.get<IModelData>(`${this.baseApiUrl}/popular${this.apiKey}`)
-    .pipe(
-      retry(3),
-      catchError((er: HttpErrorResponse) => {
-        console.log(`Error ${JSON.stringify(er)}`);
-        return EMPTY;
-      })
-    );
-  }
-
-  public getTopLevelMoviesFromApi(): Observable<IModelData> {
-    return this.httpClient.get<IModelData>(`${this.baseApiUrl}/top_rated${this.apiKey}`)
-    .pipe(
-      retry(3),
-      catchError((er: HttpErrorResponse) => {
-        console.log(`Error ${JSON.stringify(er)}`);
-        return EMPTY;
-      })
-    );
-  }
-
-  public getUpcomingMoviesFromApi(): Observable<IModelData> {
-    return this.httpClient.get<IModelData>(`${this.baseApiUrl}/upcoming${this.apiKey}`)
-    .pipe(
-      retry(3),
-      catchError((er: HttpErrorResponse) => {
-        console.log(`Error ${JSON.stringify(er)}`);
-        return EMPTY;
-      })
-    );
+  private initFilmsCollection(): Array<IFilm> {
+    let films  = [
+      {id:0, backdrop_path: '', original_language: 'en', original_title: 'Kingdom of the Planet of the Apes', title: 'Kingdom',
+        description: 'Several generations in the future following Caesar\'s reign, apes are now the dominant species and live harmoniously while humans have been reduced to living in the shadows. As a new tyrannical ape leader builds his empire, one young ape undertakes a harrowing journey that will ' +
+          'cause him to question all that he has known about the past and to make choices that will define a future for apes and humans alike.', release_date: 'May 5, 2024', rating: 14},
+      {id:1, backdrop_path: '', original_language: 'en', original_title: 'Civil War', title: 'Civil War',
+        description: 'In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.', release_date: 'May 15, 2024',rating: 3 },
+      {id:2, backdrop_path: '', original_language: 'en', original_title: 'Godzilla x Kong: The New Empire', title: 'Godzilla x Kong',
+        description: 'Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, ' +
+          'challenging their very existence – and our own.', release_date: 'May 17, 2024', rating: 7},
+      {id:3, backdrop_path: '', original_language: 'en', original_title: 'Kingdom of the Planet of the Apes', title: 'Kingdom',
+        description: 'Several generations in the future following Caesar\'s reign, apes are now the dominant species and live harmoniously while humans have been reduced to living in the shadows. As a new tyrannical ape leader builds his empire, one young ape undertakes a harrowing journey that will ' +
+          'cause him to question all that he has known about the past and to make choices that will define a future for apes and humans alike.', release_date: 'May 5, 2024', rating: 14},
+      {id:4, backdrop_path: '', original_language: 'en', original_title: 'Civil War', title: 'Civil War',
+        description: 'In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.', release_date: 'May 15, 2024',rating: 3 },
+      {id:5, backdrop_path: '', original_language: 'en', original_title: 'Godzilla x Kong: The New Empire', title: 'Godzilla x Kong',
+        description: 'Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, ' +
+          'challenging their very existence – and our own.', release_date: 'May 17, 2024', rating: 7},
+      {id:6, backdrop_path: '', original_language: 'en', original_title: 'Kingdom of the Planet of the Apes', title: 'Kingdom',
+        description: 'Several generations in the future following Caesar\'s reign, apes are now the dominant species and live harmoniously while humans have been reduced to living in the shadows. As a new tyrannical ape leader builds his empire, one young ape undertakes a harrowing journey that will ' +
+          'cause him to question all that he has known about the past and to make choices that will define a future for apes and humans alike.', release_date: 'May 5, 2024', rating: 14},
+      {id:7, backdrop_path: '', original_language: 'en', original_title: 'Civil War', title: 'Civil War',
+        description: 'In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.', release_date: 'May 15, 2024',rating: 3 },
+      {id:8, backdrop_path: '', original_language: 'en', original_title: 'Godzilla x Kong: The New Empire', title: 'Godzilla x Kong',
+        description: 'Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, ' +
+          'challenging their very existence – and our own.', release_date: 'May 17, 2024', rating: 7},
+      {id:9, backdrop_path: '', original_language: 'en', original_title: 'Tarot', title: '1234567890123',
+        description: 'When a group of friends recklessly violate the sacred rule of Tarot readings, they unknowingly unleash an unspeakable evil trapped within the cursed cards. ' +
+          'One by one, they come face to face with fate and end up in a race against death.', release_date: 'May 11, 2024', rating: 1}
+    ]
+    return films;
   }
 }
