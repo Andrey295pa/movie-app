@@ -20,8 +20,8 @@
   <div *ngFor="let film of movies; let i = index">
     <app-movie-card class="card"
                     [movie]="film"
-                    (favoriteFilm)="saveFavorite($event)"
-                    (likeFilm)="saveLikeFilm($event)"
+                    (favoriteFilm)="saveWatcesFilm($event)"
+                    (likeFilm)="saveLikeFilm(film)"
                     (detailFilmId)="showDetailFilm($event)">
     </app-movie-card>
   </div>
