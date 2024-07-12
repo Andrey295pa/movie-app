@@ -1,3 +1,10 @@
-<h2>This component is empty, </h2>
-<h3> because I don't now how create/or filter date
-  for this components (I think about it ...)</h3>
+<div class="content">
+  <div >
+    @for (film of movies; track $index) {
+    <app-movie-card class="card"
+                    [movie]="film"
+                    [IsNeedSowButton]="false">
+    </app-movie-card>
+  }  
+  </div>
+</div>

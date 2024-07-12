@@ -1,28 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
+import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {IFilm} from "../film/IFilm";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserFilmsService {
-  watcheFilmId: number[] = [];
-  likeFilmId: number[] = [];
-  constructor() { }
+  public likeFilms$ : BehaviorSubject<IFilm[]> =  new BehaviorSubject<IFilm[]>([]);
 
-  public  setLikeFilm(id:number): void {
-    this.likeFilmId.unshift(id);
-    console.log(this.likeFilmId + "!!!!!!!!!!!!!!!!!!!!!");
-  }
-
-  public  setWatchFilm(id:number): void {
-    this.likeFilmId.unshift(id);
-
-  }
-
-  public getLikeFilm(): number[] {
-    return this.likeFilmId;
-  }
-
-  public getWatchFilm(): number[] {
-    return this.watcheFilmId;
-  }
 }

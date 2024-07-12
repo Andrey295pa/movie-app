@@ -1,11 +1,13 @@
 
+<div class="body" style="background-image: url({{imgPath}})">
+  <div class="container" >
+    <h3>{{film?.title}}</h3>
+    <p>Release date: {{film?.release_date}}</p>
+    <p>Rating film : {{film?.vote_average}}</p>
+    <h3>Origin name : {{film?.original_title}}</h3>
+    <p>{{film?.overview}}</p>
+  </div>
 
-<div class="container" >
-  <h3>{{film.title}}</h3>
-  <p>Release date: {{film.release_date}}</p>
-  <p>Rating film : {{film.rating}}</p>
-  <h3>Origin name : {{film.original_title}}</h3>
-  <p>{{film.description}}</p>
+  <button (click)="goMainView()">Go back</button>
 </div>
 
-<button (click)="goMainView()">Go back</button>

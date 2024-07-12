@@ -1,11 +1,15 @@
 
-<p>
-  <ng-container>
-    <p *ngIf="films.length <1 ">You didn't choose any film. List empty now.</p>
-    <ul *ngFor="let film of films">
-      <li>{{film.title}}</li>
-    </ul>
-  </ng-container>
+<div>
   <button (click)="goMainView()">Back</button>
-</p>
+   <p *ngIf="films.length <1 ">You didn't choose any film. List empty now.</p>
+    <ul *ngFor="let film of films">
+      <li style="background-image: url({{imgPath}}{{film.backdrop_path}})" >
+         {{film.title}}
+      <p>{{film.overview}}</p>
+      <button (click)="deleteFomLike(film)">Delete from like Film</button>
+      </li>
+ </ul>
+</div>
+
+
 

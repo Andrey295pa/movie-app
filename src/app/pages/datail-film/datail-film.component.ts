@@ -12,17 +12,24 @@ import {AllFilmsService} from "../../service/all-films.service";
 })
 export class DatailFilmComponent implements OnInit{
   film!: IFilm ;
+  imgPath = "";
   constructor(private router: Router,
               private activRouters: ActivatedRoute,
               private allFilmServise : AllFilmsService) {
   }
 
   ngOnInit(): void {
+    let idFilm!: number;
+
     this.activRouters.params.subscribe(p =>
     {
-      this.film = this.allFilmServise.getMovie(parseInt(p['id']));
-      console.log(this.film);
+      idFilm = parseInt(p['id']);
     });
+
+    this.allFilmServise.getMovieApiById(idFilm).subscribe(m => {
+      this.film = m;
+      this.imgPath = `https://image.tmdb.org/t/p/w500${m.backdrop_path}`;
+    } );
   }
 
   goMainView() {

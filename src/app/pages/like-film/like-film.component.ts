@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IFilm} from "../../film/IFilm";
 import {AllFilmsService} from "../../service/all-films.service";
 import {UserFilmsService} from "../../service/user-films.service";
 import {NgForOf, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-like-film',
@@ -15,16 +16,31 @@ import {Router} from "@angular/router";
   templateUrl: './like-film.component.html',
   styleUrl: './like-film.component.scss'
 })
-export class LikeFilmComponent {
-  films: IFilm[];
+export class LikeFilmComponent implements OnDestroy, OnInit {
+  private _filmsSubscription!: Subscription;
+  public films: IFilm[] = [];
+  public imgPath = "https://image.tmdb.org/t/p/w500";
 
   constructor(private allFilmsService: AllFilmsService,
-              private userFilmSevice: UserFilmsService,
+              private userFilmService: UserFilmsService,
               private router: Router) {
-    this.films = allFilmsService.getMovies().filter(m => userFilmSevice.getLikeFilm().includes(m.id));
+  }
+
+  ngOnDestroy(): void {
+    this._filmsSubscription?.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this._filmsSubscription = this.userFilmService.likeFilms$.subscribe(value => this.films = value);
   }
 
   goMainView() {
     this.router.navigateByUrl("");
+  }
+
+  deleteFomLike(film: IFilm) {
+    let arrFilm: IFilm[] = this.userFilmService.likeFilms$.getValue()
+    .filter(item => item.id !== film.id);
+    this.userFilmService.likeFilms$.next(arrFilm);
   }
 }
