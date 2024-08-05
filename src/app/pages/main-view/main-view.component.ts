@@ -1,12 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MovieCardComponent} from "../../movie-card/movie-card/movie-card.component";
 import {IFilm} from "../../film/IFilm";
-import {AllFilmsService} from "../../service/all-films.service";
 import {UserFilmsService} from "../../service/user-films.service";
 import {Router} from "@angular/router";
 import {NgForOf} from "@angular/common";
 import {MatTab, MatTabChangeEvent, MatTabGroup, MatTabLabel} from "@angular/material/tabs";
 import {Subscription} from "rxjs";
+import {Store } from '@ngrx/store';
+import { loadMovies } from '../../store/actions';
+import { selectMovies } from '../../store/selectors';
 
 @Component({
   selector: 'app-main-view',
@@ -27,17 +29,24 @@ export class MainViewComponent implements OnInit, OnDestroy {
   public likeFilms: IFilm[] = [];
   private _filmsSubscription!: Subscription;
 
-  constructor(private allFilmsService: AllFilmsService,
-              private userFilmService: UserFilmsService,
-              private router: Router) {
+  constructor(private userFilmService: UserFilmsService,
+              private router: Router,
+              private store: Store) {
   }
 
   ngOnInit(): void {
-    this.allFilmsService.getAllMoviesFromApi().subscribe(data => {
-      this.movies = data.results;
-      console.log(data.results);
-    });
-    this._filmsSubscription = this.userFilmService.likeFilms$.subscribe(value => this.likeFilms = value);
+    this.store.dispatch(loadMovies());
+  
+    this.store.select(selectMovies).pipe().subscribe(
+      m => {
+        console.log(m + " --------Store all film");
+        if(m !== null)
+          this.movies = m;
+      }
+    );
+
+    this._filmsSubscription = this.userFilmService.likeFilms$
+    .subscribe(value => this.likeFilms = value);
   }
 
   ngOnDestroy(): void {
@@ -49,6 +58,8 @@ export class MainViewComponent implements OnInit, OnDestroy {
   }
 
   saveLikeFilm(film: IFilm) {
+    // console.log(this.likeFilms);
+    // console.log(film.id + " -film");
     if(this.likeFilms.indexOf(film) < 0) {
       const newArr: IFilm[] = this.likeFilms;
       newArr.push(film);

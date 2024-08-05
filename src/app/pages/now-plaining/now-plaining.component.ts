@@ -3,6 +3,9 @@ import {MovieCardComponent} from "../../movie-card/movie-card/movie-card.compone
 import {NgForOf} from "@angular/common";
 import {IFilm} from "../../film/IFilm";
 import {AllFilmsService} from "../../service/all-films.service";
+import { Store } from '@ngrx/store';
+import { loadNowPlayingMovies } from '../../store/actions';
+import { selectNowPlayingMovies } from '../../store/selectors';
 
 @Component({
   selector: 'app-now-plaining',
@@ -17,12 +20,20 @@ import {AllFilmsService} from "../../service/all-films.service";
 export class NowPlainingComponent implements OnInit{
   public movies: Array<IFilm> = [];
 
-  constructor(private allFilmService: AllFilmsService) {
+  constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    this.allFilmService.getNowPlayingMoviesFromApi()
-      .subscribe(data => this.movies = data.results)
+
+    this.store.dispatch(loadNowPlayingMovies());
+
+    this.store.select(selectNowPlayingMovies).pipe().subscribe(
+      m => {
+        if(m !== null) {
+          this.movies = m;
+        }
+      }
+    );
   }
 
 }

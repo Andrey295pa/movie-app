@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {IFilm} from "../../film/IFilm";
-import {AllFilmsService} from "../../service/all-films.service";
-import {NgForOf} from "@angular/common";
 import {MovieCardComponent} from "../../movie-card/movie-card/movie-card.component";
+import { Store } from '@ngrx/store';
+import { upcommingMovies } from '../../store/actions';
+import { selectUpcommingMovies } from '../../store/selectors';
 
 @Component({
   selector: 'app-upcomming',
@@ -16,14 +17,18 @@ import {MovieCardComponent} from "../../movie-card/movie-card/movie-card.compone
 export class UpcommingComponent implements OnInit{
   public movies: Array<IFilm> = [];
 
-  constructor(private allFilmService: AllFilmsService) {
+  constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    this.allFilmService.getUpcomingMoviesFromApi()
-      .subscribe(data => {
-        this.movies = data.results
-        console.log(data + " all data");
-      });
-  }
+    this.store.dispatch(upcommingMovies());
+
+    this.store.select(selectUpcommingMovies).pipe().subscribe(
+      m => {
+        if(m !== null)
+          this.movies = m;
+      }
+    );
+}
+
 }
