@@ -1,0 +1,25 @@
+<!--<p>like-films works!</p>
+<div class="content">
+  <ng-container>
+    @if(favoriteFilms.length > 0) {
+    <p  class = "button-30" >Favorite film : {{lastFavoriteFilm}}</p>
+    }
+  </ng-container>
+
+  <ng-container>
+    @if(likeFilms.length > 0) {
+    <h3>Like film</h3>
+    <ul *ngFor="let film of likeFilms">
+  <li>{{film | prettyTitle}}</li>
+</ul>
+    }
+  </ng-container>
+</div>-->
+
+<p>
+  <ng-container>
+    <ul *ngFor="let film of films">
+      <li>{{film.title}}</li>
+    </ul>
+  </ng-container>
+</p>
