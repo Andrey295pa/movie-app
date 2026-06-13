@@ -1,0 +1,10 @@
+<div class="content">
+  <div >
+    @for (film of movies; track $index) {
+    <app-movie-card class="card"
+                    [movie]="film"
+                    [IsNeedSowButton]="false">
+    </app-movie-card>
+  }  
+  </div>
+</div>
