@@ -1,0 +1,9 @@
+<div class="content">
+  <div *ngFor="let film of movies; let i = index">
+    <app-movie-card class="card"
+                    [movie]="film">
+    </app-movie-card>
+  </div>
+</div>
+
+

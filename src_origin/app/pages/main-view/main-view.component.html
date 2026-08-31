@@ -1,0 +1,30 @@
+<div class="tab-navigation" >
+  <mat-tab-group (selectedTabChange)="tabChange($event)">
+
+    <mat-tab>
+      <ng-template mat-tab-label>All films</ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>My favorites / Like</ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>WatchList</ng-template>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
+
+<div class="content">
+  <div *ngFor="let film of movies; let i = index">
+    <app-movie-card class="card"
+                    [movie]="film"
+                    (favoriteFilm)="saveFavorite($event)"
+                    (likeFilm)="saveLikeFilm($event)"
+                    (detailFilmId)="showDetailFilm($event)">
+    </app-movie-card>
+  </div>
+</div>
+<br>
+
