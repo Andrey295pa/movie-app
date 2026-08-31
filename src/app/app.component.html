@@ -1,10 +1,33 @@
 
-  <app-movie-card [moviesCollection]= "movies"
-                  (favoriteFilm)="saveFavorite($event)"
-                  (likeFilm)="saveLikeFilm($event)"></app-movie-card>
+<div class="splitter">
+  <div class="left" style="width: 70%">
+    @for (movie of movies; track movie.id) {
+      <app-movie-card [movie] = "movie"
+      (favoriteFilm)="saveFavorite($event)"
+      (likeFilm)="saveLikeFilm($event)">
+      </app-movie-card>
+    }
 
-    <p  class = "button-30" >Favorite film : {{lastFavoriteFilm}}</p>
-    <p  class = "button-30" >Like film : {{lastLikeFilm}}</p>
+  </div>
+  <div class="right" style="width: 30%">
+    <ng-container>
+      @if(favoriteFilms.length > 0) {
+      <p  class = "button-30" >Favorite film : {{lastFavoriteFilm}}</p>
+      }
+    </ng-container>
+
+    <ng-container>
+      @if(likeFilms.length > 0) {
+      <h3>Like film</h3>
+      <ul >
+        @for(film of likeFilms; track film) {
+          <li>{{film | prettyTitle}}</li>
+        }
+      </ul>
+      }
+    </ng-container>
+  </div>
+</div>
 
 
 
